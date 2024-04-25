@@ -15,7 +15,7 @@ import java.util.List;
 public class Task3 {
     public static void main(String[] args) {
         if (args.length != 2) {
-            System.out.println("Необходимо ввести 2 аргумента");
+            System.out.println("Аргументов должно быть 2");
             return;
         }
         try (FileReader fileReader = new FileReader(args[0]);
@@ -31,7 +31,7 @@ public class Task3 {
             putIn(map, test1.tests);
             gson.toJson(test1, writer);
         } catch (JsonIOException | JsonSyntaxException | NullPointerException | IOException e) {
-            System.out.println("Неверные даннные\n" + e);
+            System.out.println("Некорректные входные данные\n" + e);
         }
     }
 
