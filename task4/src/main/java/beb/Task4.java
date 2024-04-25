@@ -1,60 +1,25 @@
 package beb;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class Task4 {
     public static void main(String[] args) {
-        String file;
-        int median;
-        int sum = 0;
-        int number = 0;
-        int stepsCounter = 0;
-        ArrayList<Integer> arr = new ArrayList<>();
-
-        Scanner in = new Scanner(System.in);
-        file = args[0];
-
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            int i = 0;
-
-            while ((line = br.readLine()) != null) {
-                arr.add(Integer.valueOf(Integer.parseInt(line)));
-                i++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        arr.sort(Comparator.naturalOrder());
-
-        for (Integer value : arr) {
-            sum += value;
-        }
-
-        median = Math.round(sum / arr.size());
+        ArrayList<Integer> nums = new ArrayList<>();
+        try {
+            Scanner scanner = new Scanner(new File(args[0]));
+            while (scanner.hasNext()) nums.add(scanner.nextInt());
+        } catch (FileNotFoundException fne) { fne.printStackTrace(); }
 
 
-        for (Integer integer : arr) {
-            number = integer;
-            while (true) {
-                if (number != median) {
-                    if (number < median) {
-                        number += 1;
-                        stepsCounter++;
-                    } else {
-                        number -= 1;
-                        stepsCounter++;
-                    }
-                } else {
-                    break;
-                }
-            }
-        }
-
-        System.out.println(stepsCounter);
+        Collections.sort(nums);
+        int target;
+        if (nums.size() % 2 == 1) target = nums.get(nums.size() / 2);
+        else target = (int) Math.round((nums.get(nums.size() / 2) + nums.get(nums.size() / 2 - 1)) / 2.0);
+        
+        int steps = 0;
+        for (int i = 0; i < nums.size(); i++)
+            steps += Math.abs(nums.get(i) - target);
+        System.out.println(steps);
     }
 }
